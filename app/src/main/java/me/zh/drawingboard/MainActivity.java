@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void changePaintColor(int color) {
         mPaint = new Paint();
+        mPaint.setAntiAlias(true);
         mPaint.setColor(color);
         mPaint.setStrokeWidth(8);
         if (mPaintBrush instanceof NormalBrush) {

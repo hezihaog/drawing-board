@@ -34,7 +34,7 @@ public class DrawCanvas extends SurfaceView implements SurfaceHolder.Callback, D
     /**
      * 绘制在Bitmap中
      */
-    private Bitmap mBitmap;
+    private Bitmap mPathBitmap;
     /**
      * 绘制线程
      */
@@ -107,14 +107,15 @@ public class DrawCanvas extends SurfaceView implements SurfaceHolder.Callback, D
                 if (isDrawing) {
                     try {
                         canvas = getHolder().lockCanvas(null);
-                        if (mBitmap == null) {
-                            mBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+                        if (mPathBitmap == null) {
+                            mPathBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
                         }
-                        Canvas tmpCanvas = new Canvas(mBitmap);
-                        tmpCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+                        //绘制线
+                        Canvas pathCanvas = new Canvas(mPathBitmap);
+                        pathCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
                         canvas.drawColor(0, PorterDuff.Mode.CLEAR);
-                        mInvoker.execute(tmpCanvas);
-                        canvas.drawBitmap(mBitmap, 0, 0, null);
+                        mInvoker.execute(pathCanvas);
+                        canvas.drawBitmap(mPathBitmap, 0, 0, null);
                     } finally {
                         getHolder().unlockCanvasAndPost(canvas);
                     }
@@ -134,7 +135,7 @@ public class DrawCanvas extends SurfaceView implements SurfaceHolder.Callback, D
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        mPathBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
     }
 
     @Override
